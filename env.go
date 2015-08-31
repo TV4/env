@@ -95,9 +95,15 @@ func String(key, fallback string) string {
 }
 
 // Strings returns a slice of strings from the ENV, or fallback variable
-func Strings(key string, fallback []string) []string {
+func Strings(key string, fallback []string, seps ...string) []string {
 	if v := os.Getenv(key); v != "" {
-		return strings.Split(v, ",")
+		sep := ","
+
+		if len(seps) > 0 {
+			sep = seps[0]
+		}
+
+		return strings.Split(v, sep)
 	}
 
 	return fallback
