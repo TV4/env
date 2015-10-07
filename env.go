@@ -34,6 +34,7 @@ A small usage example
 package env
 
 import (
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -104,6 +105,20 @@ func Strings(key string, fallback []string, seps ...string) []string {
 		}
 
 		return strings.Split(v, sep)
+	}
+
+	return fallback
+}
+
+// URL returns a URL from the ENV, or fallback URL if missing/invalid
+func URL(key string, fallback *url.URL) *url.URL {
+	if v := os.Getenv(key); v != "" {
+		u, err := url.Parse(v)
+		if err != nil {
+			return fallback
+		}
+
+		return u
 	}
 
 	return fallback
