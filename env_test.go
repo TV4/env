@@ -141,6 +141,18 @@ func TestInt(t *testing.T) {
 	}
 }
 
+func TestMustInt(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Error("expected panic did not occur")
+		}
+	}()
+
+	os.Clearenv()
+	env.MustString("test")
+
+}
+
 func TestIntDefault(t *testing.T) {
 	in, out := 3, 3
 
@@ -176,6 +188,17 @@ func TestStringDefault(t *testing.T) {
 	if got := env.String("STRING_DEFAULT", in); got != out {
 		t.Errorf(`String("STRING_DEFAULT", "%v") = %v, want %v`, in, got, out)
 	}
+}
+
+func TestMustString(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Error("expected panic did not occur")
+		}
+	}()
+
+	os.Clearenv()
+	env.MustString("test")
 }
 
 func ExampleString() {

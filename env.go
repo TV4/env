@@ -34,6 +34,7 @@ A small usage example
 package env
 
 import (
+	"fmt"
 	"net/url"
 	"os"
 	"strconv"
@@ -51,7 +52,9 @@ type Client interface {
 	Float64(key string, fallback float64) float64
 	Duration(key string, fallback time.Duration) time.Duration
 	Int(key string, fallback int) int
+	MustInt(key string) int
 	String(key, fallback string) string
+	MustString(key string) string
 	Strings(key string, fallback []string, seps ...string) []string
 	URL(key string, fallback *url.URL) *url.URL
 }
@@ -117,6 +120,16 @@ func (c *client) Int(key string, fallback int) int {
 	return fallback
 }
 
+// MustInt will panic if ENV variable is not set
+func (c *client) MustInt(key string) int {
+	i, err := strconv.Atoi(c.Getenv(key))
+	if err != nil {
+		msg := fmt.Sprintf("%s must exist (cannot be empty)", key)
+		panic(msg)
+	}
+	return i
+}
+
 // String returns a string from the ENV, or fallback variable
 func (c *client) String(key, fallback string) string {
 	if v := c.Getenv(key); v != "" {
@@ -124,6 +137,16 @@ func (c *client) String(key, fallback string) string {
 	}
 
 	return fallback
+}
+
+// MustString will panic if ENV variable is not set
+func (c *client) MustString(key string) string {
+	s := DefaultClient.String(key, "")
+	if s == "" {
+		msg := fmt.Sprintf("%s must exist (cannot be empty)", key)
+		panic(msg)
+	}
+	return s
 }
 
 // Strings returns a slice of strings from the ENV, or fallback variable
@@ -180,9 +203,19 @@ func Int(key string, fallback int) int {
 	return DefaultClient.Int(key, fallback)
 }
 
+// MustInt will panic if ENV variable is not set
+func MustInt(key string) int {
+	return DefaultClient.MustInt(key)
+}
+
 // String returns a string from the ENV, or fallback variable
 func String(key, fallback string) string {
 	return DefaultClient.String(key, fallback)
+}
+
+// MustString will panic if ENV variable is not set
+func MustString(key string) string {
+	return DefaultClient.MustString(key)
 }
 
 // Strings returns a slice of strings from the ENV, or fallback variable
