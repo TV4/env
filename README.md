@@ -1,6 +1,7 @@
 # env
 
 [![Build Status](https://travis-ci.org/TV4/env.svg?branch=master)](https://travis-ci.org/TV4/env)
+[![Go Report Card](https://goreportcard.com/badge/github.com/TV4/env)](https://goreportcard.com/report/github.com/TV4/env)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/TV4/env)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/TV4/env#license-mit)
 
