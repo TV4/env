@@ -25,8 +25,11 @@ A small usage example
     		env.Bool("BOOL", false),
     		env.Bytes("BYTES", []byte{4, 2}),
     		env.Duration("DURATION", 250000),
+    		env.Float64("FLOAT64", float64(2.5)),
     		env.Int("INT", 1337),
     		env.String("STRING", "Foobar"),
+    		env.Strings("STRINGS", []string{"Foo", "Bar"}),
+				env.URL("URL", &url.URL{Scheme: "http", Host: "example.com"}),
     	)
     }
 
