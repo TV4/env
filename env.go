@@ -16,6 +16,7 @@ A small usage example
 
     import (
     	"fmt"
+    	"net/url"
 
     	"github.com/TV4/env"
     )
@@ -29,7 +30,7 @@ A small usage example
     		env.Int("INT", 1337),
     		env.String("STRING", "Foobar"),
     		env.Strings("STRINGS", []string{"Foo", "Bar"}),
-				env.URL("URL", &url.URL{Scheme: "http", Host: "example.com"}),
+    		env.URL("URL", &url.URL{Scheme: "http", Host: "example.com"}),
     	)
     }
 

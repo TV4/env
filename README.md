@@ -22,6 +22,7 @@ package main
 
 import (
 	"fmt"
+	"net/url"
 
 	"github.com/TV4/env"
 )
