@@ -29,6 +29,7 @@ import (
 
 func main() {
 	fmt.Println(
+		env.Base64Bytes("BASE64_BYTES", []byte{1, 2, 3}),
 		env.Bool("BOOL", false),
 		env.Bytes("BYTES", []byte{4, 2}),
 		env.Duration("DURATION", 250000),
@@ -42,11 +43,11 @@ func main() {
 ```
 
 ```bash
-$ go run example.go
-false [4 2] 250µs 2.5 1337 Foobar [Foo Bar] http://example.com
+go run example.go
+[1 2 3] false [4 2] 250µs 2.5 1337 Foobar [Foo Bar] http://example.com
 
-$ BOOL=true BYTES=foo DURATION=24m FLOAT64=11.2 INT=2600 STRING=hello STRINGS=a,b URL=http://c7.se/ go run example.go
-true [102 111 111] 24m0s 11.2 2600 hello [a b] http://c7.se/
+BASE64_BYTES=Zm9v BOOL=true BYTES=foo DURATION=24m FLOAT64=11.2 INT=2600 STRING=hello STRINGS=a,b URL=http://c7.se/ go run example.go
+[102 111 111] true [102 111 111] 24m0s 11.2 2600 hello [a b] http://c7.se/
 ```
 
 ## License (MIT)
