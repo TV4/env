@@ -38,6 +38,7 @@ A small usage example
 package env
 
 import (
+	"encoding/base64"
 	"net/url"
 	"os"
 	"strconv"
@@ -50,10 +51,11 @@ var DefaultClient = NewClient(os.Getenv)
 
 // Client is the env client interface
 type Client interface {
+	Base64Bytes(key string, fallback []byte) []byte
 	Bool(key string, fallback bool) bool
 	Bytes(key string, fallback []byte) []byte
-	Float64(key string, fallback float64) float64
 	Duration(key string, fallback time.Duration) time.Duration
+	Float64(key string, fallback float64) float64
 	Int(key string, fallback int) int
 	String(key, fallback string) string
 	Strings(key string, fallback []string, seps ...string) []string
@@ -82,6 +84,17 @@ func Func(v map[string]string) func(string) string {
 	return func(k string) string {
 		return v[k]
 	}
+}
+
+// Base64Bytes returns a slice of bytes from the ENV decoded using base64.StdEncoding, or fallback variable
+func (c *client) Base64Bytes(key string, fallback []byte) []byte {
+	if s := c.Getenv(key); s != "" {
+		if v, err := base64.StdEncoding.DecodeString(s); err == nil {
+			return v
+		}
+	}
+
+	return fallback
 }
 
 // Bool returns a bool from the ENV, or fallback variable
@@ -165,6 +178,11 @@ func (c *client) URL(key string, fallback *url.URL) *url.URL {
 	}
 
 	return fallback
+}
+
+// Base64Bytes returns a slice of bytes from the ENV decoded using base64.StdEncoding, or fallback variable
+func Base64Bytes(key string, fallback []byte) []byte {
+	return DefaultClient.Base64Bytes(key, fallback)
 }
 
 // Bool returns a bool from the ENV, or fallback variable

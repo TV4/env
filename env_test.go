@@ -32,6 +32,27 @@ func TestMapClient(t *testing.T) {
 	}
 }
 
+func TestBase64Bytes(t *testing.T) {
+	key := "BASE64_BYTES"
+
+	for _, tt := range []struct {
+		env      string
+		fallback []byte
+		want     []byte
+	}{
+		{"", []byte("foo"), []byte("foo")},
+		{"invalid", []byte("foo"), []byte("foo")},
+		{"YmFyIGJheg==", []byte("foo"), []byte("bar baz")},
+		{"cXV4CnF1dXg=", []byte("foo"), []byte("qux\nquux")},
+	} {
+		os.Setenv(key, tt.env)
+
+		if got := env.Base64Bytes(key, tt.fallback); !bytes.Equal(got, tt.want) {
+			t.Errorf(`Base64Bytes(%q, %q) = %q, want %q`, key, tt.fallback, got, tt.want)
+		}
+	}
+}
+
 func TestBool(t *testing.T) {
 	tests := []struct {
 		env string
