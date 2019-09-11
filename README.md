@@ -52,7 +52,7 @@ BASE64_BYTES=Zm9v BOOL=true BYTES=foo DURATION=24m FLOAT64=11.2 INT=2600 STRING=
 
 ## License (MIT)
 
-Copyright (c) 2015-2018 TV4
+Copyright (c) 2015-2019 TV4
 
 > Permission is hereby granted, free of charge, to any person obtaining
 > a copy of this software and associated documentation files (the
