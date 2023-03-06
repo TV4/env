@@ -1,4 +1,5 @@
 /*
+Deprecated: This package is no longer maintained.
 
 Package env loads environment variables into Go types, with fallback values.
 
